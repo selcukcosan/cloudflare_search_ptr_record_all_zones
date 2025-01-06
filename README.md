@@ -3,4 +3,4 @@ You need to get Beaarer Token ID to search and retrieve the records.
 
 **_NOTE:_**  The script search first 500 zones by default `zones?page=1&per_page=500`
 
-If you have more than 500 DNS zones, you need to run the script again after change the page number `zones?page=X&per_page=500`
+If you have more than 500 DNS zones, you need to run the script again after change the page number 2,3 etc. `zones?page=X&per_page=500`
