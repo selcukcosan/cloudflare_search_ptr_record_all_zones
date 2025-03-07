@@ -10,20 +10,22 @@ headers = {'Authorization': api_token, 'Content-Type':'application/json'}
 
 ptr_id = "192.0.2.1"
 result= ""
+print("Loading Zones")
 cloudflare_dns = cloudflare_api + "zones?page=1&per_page=500"
 cloudflare_dns_response = requests.get(cloudflare_dns, headers=headers)
 
 if cloudflare_dns_response.status_code == 200:
     all_zones_data = json.loads(cloudflare_dns_response.text)
+    pprint.pprint(all_zones_data["result_info"])
     line_count = 0
     for zones in all_zones_data["result"]:
         line_count += 1
         zone_name = zones["name"]
         zone_id = zones["id"]
-        cloudflare_dns = cloudflare_api + "zones/" + zone_id + "/dns_records"
+        cloudflare_dns = cloudflare_api + "zones/" + zone_id + "/dns_records?page=1&per_page=5000&content="+ptr_id
         cloudflare_dns_response = requests.get(cloudflare_dns, headers=headers)
         print(ptr_id+" searching for "+str(line_count)+" "+zone_name)
-
+        iffound = False
         if cloudflare_dns_response.status_code == 200:
             dns_data = json.loads(cloudflare_dns_response.text)
 
@@ -31,6 +33,9 @@ if cloudflare_dns_response.status_code == 200:
                 content = names["content"]
                 if content == ptr_id:
                     result += names["name"]+" "
+                    iffound = True
+            if iffound:
+                pprint.pprint(dns_data)
                     #print(ptr_id+" PTR Record has been found in "+line_count+" "+zone_name)
             #if result == "":
                 #print(ptr_id+" PTR Record has not been found in "+line_count+" "+zone_name)
