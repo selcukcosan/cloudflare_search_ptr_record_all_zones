@@ -1,6 +1,4 @@
 This Python scripts search and find the FQDN DNS names for specified IP address (PTR) record in all DNS zones in Cloudflare.
 You need to get Beaarer Token ID to search and retrieve the records. 
 
-**_NOTE:_**  The script search first 500 zones by default `zones?page=1&per_page=500`
-
-If you have more than 500 DNS zones, you need to run the script again after change the page number 2,3 etc. `zones?page=X&per_page=500`
+**_NOTE:_**  The script does exact PTR record(192.168.1.1 in the example) search in all zones and write the results`
